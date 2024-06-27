@@ -29,13 +29,14 @@ export const Windows95TaskBar = () => {
         </div>
 
         <div className="flex flex-col w-full">
-          <DesktopIcon
+          {/* <DesktopIcon
             imageSrc="/webpolio.jpeg"
             title="webpolio"
             imgClass="rounded-md"
             isSmall={true}
             containerClass="px-3 py-1.5 hover:bg-blue-900 hover:text-white"
-          />
+          /> */}
+          
           <DesktopIcon
             imageSrc="/linkedin.webp"
             title="linkedin"
@@ -84,7 +85,7 @@ export const Windows95TaskBar = () => {
         </div>
 
 
-        
+
         </div>
         <div
           className="h-full  text-xs px-2  py-1 bg-[#C4C2C5] font-semibold  "
