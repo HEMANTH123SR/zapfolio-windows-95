@@ -7,6 +7,7 @@ const Windows95Theme = async ({ params }: { params: { userId: string } }) => {
     );
 
     const userData = await userDataResponse.json();
+    console.log(params.userId, "user id");
     console.log(userData);
     if (userData.success) {
         const {
