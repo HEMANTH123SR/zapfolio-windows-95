@@ -1,14 +1,13 @@
 
 import { UserDetailedObjectType } from "@/lib/types";
 import { UserComponent } from "@/app/components/section/user-section"
-const Windows95Theme = async ({ params }: { params: { userId: string } }) => {
+const Windows95Theme = async ({ params }: { params: { userid: string } }) => {
     const userDataResponse = await fetch(
-        `https://www.zapfolio.in/api/get-user-data?userId=${params.userId}`
+        `https://www.zapfolio.in/api/get-user-data?userId=${params.userid}`
     );
 
     const userData = await userDataResponse.json();
-    console.log(params, "params object");  // Log the entire params object for debugging
-    console.log(userData);
+
     if (userData.success) {
         const {
             linkedinUserData: user,
