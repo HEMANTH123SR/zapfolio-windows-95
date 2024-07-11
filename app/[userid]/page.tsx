@@ -1,31 +1,59 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { UserDetailedObjectType, ComponentsToShowType } from "@/lib/types";
+import { UserComponent } from "@/app/components/section/user-section";
+const Twitter = ({ params }: { params: { userid: string } }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState<UserDetailedObjectType | null>(null);
+    const [componentsToShow, setComponentsToShow] =
+        useState<ComponentsToShowType>({
+            summary: true,
+            headline: true,
+            geo: true,
+            languages: true,
+            educations: true,
+            position: true,
+            skills: true,
+            courses: true,
+            certifications: true,
+            projects: true,
+            resume: true,
+        });
 
-import { UserDetailedObjectType } from "@/lib/types";
-import { UserComponent } from "@/app/components/section/user-section"
-const Windows95Theme = async ({ params }: { params: { userid: string } }) => {
-    const userDataResponse = await fetch(
-        `https://www.zapfolio.in/api/get-user-data?userId=${params.userid}`
-    );
+    useEffect(() => {
+        setIsLoading(true);
+        (async () => {
+            const userDataResponse = await fetch(
+                `/api/get-data?id=${params.userid}`
+            );
+            const userData = await userDataResponse.json();
+            console.log("user data", userData);
+            if (userData.success) {
+                setUser(userData.data.linkedinUserData);
+                setComponentsToShow(userData.data.themesData.twitter.componentsToShow);
+            }
+            setIsLoading(false);
+        })();
+    }, [params.userid]);
 
-    const userData = await userDataResponse.json();
-
-    if (userData.success) {
-        const {
-            linkedinUserData: user,
-        }: { linkedinUserData: UserDetailedObjectType } = userData.data;
+    if (!isLoading) {
+        if (user) {
+            return <UserComponent user={user} componentsToShow={componentsToShow} />;
+        }
         return (
-            <UserComponent user={user} />
-        )
+            <main className="flex flex-col w-screen h-screen bg-white justify-center items-center">
+                <h1 className="text-6xl font-semibold">404</h1>
+                <span className="text-xs font-semibold font-sans">
+                    something went wrong
+                </span>
+            </main>
+        );
     }
-
     return (
         <main className="flex flex-col w-screen h-screen bg-white justify-center items-center">
-            <h1 className="text-6xl font-semibold">404</h1>
-            <span className="text-xs font-semibold font-sans">
-                something went wrong
-            </span>
+            <span className="text-xs font-semibold font-sans">loading</span>
         </main>
     );
-}
+};
 
-
-export default Windows95Theme;
+export default Twitter;
