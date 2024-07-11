@@ -24,13 +24,13 @@ const Twitter = ({ params }: { params: { userid: string } }) => {
         setIsLoading(true);
         (async () => {
             const userDataResponse = await fetch(
-                `/api/get-data?id=${params.userid}`
+                `/api?id=${params.userid}`
             );
             const userData = await userDataResponse.json();
             console.log("user data", userData);
             if (userData.success) {
                 setUser(userData.data.linkedinUserData);
-                setComponentsToShow(userData.data.themesData.twitter.componentsToShow);
+                setComponentsToShow(userData.data.themesData.windows95.componentsToShow);
             }
             setIsLoading(false);
         })();
